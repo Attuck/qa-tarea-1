@@ -17,31 +17,40 @@ public class Tarea1{
   public static int OCTOBER = 10;
   public static int NOVEMBER = 11;
   public static int DECEMBER = 12;
+  public static int DAYS_OF_WEEK = 7;
 
   public static void main(String[] args){
     System.out.println("Iniciando programa");
     System.out.println(nextDay(2, 28, 2016));
+    System.out.println(dayOfWeek(2, 28, 2016));
+    System.out.println(dayOfYear(2, 28, 2016));
+    System.out.println(validDate(2, 28, 2016));
+    System.out.println(isLeap(2016));
+    
   }
 
+  
   /**
-   * In a handwritten note in a collection of astronomical tables,
-   * Carl Friedrich Gauss described a method for calculating the day of the
-   * week for 1 January in any given year. He never published it.
-   * It was finally included in his collected works in 1927.
+   * Método de Carl Friedrich Gauss basado en sus estudios de movimientos estelares
+   * para encontrar el día de la semana del 1 de enero de cualquier año.
    *
+   * @return un número del 0 al 6 donde el 0 es domingo y el 6 es sábado y así los demás días
    */
   public static int dayOfWeekJan1st(int year){
-    int dayOfWeek = (1 + 5 * ((year-1) % 4) + 4 * ((year-1) % 100) + 6 * ((year-1) % 400)) % 7;
-
+    int dayOfWeek = (1 + 5 * ((year-1) % 4) + 4 * ((year-1) % 100) + 6 * ((year-1) % 400)) % DAYS_OF_WEEK;
     return dayOfWeek;
   }
-
-
+  
+  /**
+   * 
+   * @return un número del 0 al 6 donde el 0 es domingo y el 6 es sábado y así los demás días
+   */
   public static int dayOfWeek(final int month, final int dayOfMonth, final int year){
     int dayOfYear = dayOfYear(month, dayOfMonth,year);
-    int dayOfWeek = (dayOfWeekJan1st(year) + (dayOfYear-1)) % 7;
+    int dayOfWeek = (dayOfWeekJan1st(year) + (dayOfYear-1)) % DAYS_OF_WEEK; //con el día de la semana del 1 de enero, se encuentra cualquiera sumando el día del año y haciendo módulo con 7(días de la semana)
     return dayOfWeek;
   }
+  
 
 
   public static int dayOfYear(final int month, final int dayOfMonth, final int year){
@@ -66,15 +75,17 @@ public class Tarea1{
 
   }
 
-  //
- // R3 (dia siguiente): Dada una fecha válida, determinar la fecha del día siguiente.
- // Se retorna con el siguiente formato: dd/mm/yyyy
+  /**
+  * R3 (dia siguiente): Dada una fecha válida, determinar la fecha del día siguiente.
+  *
+  * @return Se retorna un String con el siguiente formato: dd/mm/yyyy
+  */
  public static String nextDay(final int month, final int dayOfMonth, final int year){
   if(validDate(month, dayOfMonth, year)){
    int daysPerMonth = DAYS_PER_MONTH[month];
-   System.out.println("" + daysPerMonth);
    int nextDay = 0, nextMonth = month, nextYear = year;
-   if (isLeap(year) && month == FEBRUARY) daysPerMonth += 1;
+   if (isLeap(year) && month == FEBRUARY) 
+     daysPerMonth += 1; //29 días en febrero bisiesto
    if (dayOfMonth < daysPerMonth) {
     nextDay = dayOfMonth+1;
    } else {
