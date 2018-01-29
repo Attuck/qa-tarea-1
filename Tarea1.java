@@ -19,6 +19,8 @@ public class Tarea1{
   public static int DECEMBER = 12;
 
   public static void main(String[] args){
+    System.out.println("Iniciando programa");
+    System.out.println(nextDay(2, 28, 2016));
   }
 
   /**
@@ -65,30 +67,31 @@ public class Tarea1{
   }
 
   //
-	//	R3 (dia siguiente): Dada una fecha válida, determinar la fecha del día siguiente.
-	// Se retorna con el siguiente formato: dd/mm/yyyy
-	public static String nextDay(final int month, final int dayOfMonth, final int year){
-		if(validDate(month, dayOfMonth, year)){
-			int daysPerMonth = DAYS_PER_MONTH[month];
-			int nextDay = 0, nextMonth = month, nextYear = year;
-			if (isLeap(year) && month == FEBRUARY) daysPerMonth += 1;
-			if (dayOfMonth < daysPerMonth) {
-				nextDay = dayOfMonth+1;
-			} else {
-				nextDay = 1;
-				if  (month == DECEMBER) {
-					nextMonth = JANUARY;
-					nextYear = year+1;
-				} else {
-					nextMonth = month+1;
-				}
-			}
-			return "" + nextDay + "/" + nextMonth + "/" + nextYear;
+ // R3 (dia siguiente): Dada una fecha válida, determinar la fecha del día siguiente.
+ // Se retorna con el siguiente formato: dd/mm/yyyy
+ public static String nextDay(final int month, final int dayOfMonth, final int year){
+  if(validDate(month, dayOfMonth, year)){
+   int daysPerMonth = DAYS_PER_MONTH[month];
+   System.out.println("" + daysPerMonth);
+   int nextDay = 0, nextMonth = month, nextYear = year;
+   if (isLeap(year) && month == FEBRUARY) daysPerMonth += 1;
+   if (dayOfMonth < daysPerMonth) {
+    nextDay = dayOfMonth+1;
+   } else {
+    nextDay = 1;
+    if  (month == DECEMBER) {
+     nextMonth = JANUARY;
+     nextYear = year+1;
+    } else {
+     nextMonth = month+1;
+    }
+   }
+   return "" + nextMonth + "/" +  nextDay+ "/" + nextYear;
 
-		}else{
-			return null;
-		}
-	}
+  }else{
+   return null;
+  }
+ }
 
 
   public static boolean isLeap(final int year){
