@@ -17,32 +17,32 @@ public class Tarea1{
   public static int OCTOBER = 10;
   public static int NOVEMBER = 11;
   public static int DECEMBER = 12;
-  
+
   public static void main(String[] args){
   }
-  
+
   /**
-   * In a handwritten note in a collection of astronomical tables, 
-   * Carl Friedrich Gauss described a method for calculating the day of the 
-   * week for 1 January in any given year. He never published it. 
+   * In a handwritten note in a collection of astronomical tables,
+   * Carl Friedrich Gauss described a method for calculating the day of the
+   * week for 1 January in any given year. He never published it.
    * It was finally included in his collected works in 1927.
-   * 
-   */ 
+   *
+   */
   public static int dayOfWeekJan1st(int year){
     int dayOfWeek = (year*365 + ((year-1) % 4) - ((year-1) % 100) + ((year-1) % 400)) % 7;
     return dayOfWeek;
   }
 
-  
+
   public static int dayOfWeek(final int month, final int dayOfMonth, final int year){
     int dayOfYear = dayOfYear(month, dayOfMonth,year);
     int dayOfWeek = (dayOfWeekJan1st(year) + dayOfYear) % 6;
     return dayOfWeek;
   }
-  
-  
+
+
   public static int dayOfYear(final int month, final int dayOfMonth, final int year){
-    
+
     if(validDate(month, dayOfMonth, year)){
       int dayOfYear = dayOfMonth;
       for(int monthIndex = 1; monthIndex < month; monthIndex ++){ //recorre todos los meses antes del provisto
@@ -60,14 +60,41 @@ public class Tarea1{
     }else{
       return -1;
     }
-    
+
   }
-  
+
+  //
+	//	R3 (dia siguiente): Dada una fecha válida, determinar la fecha del día siguiente.
+	// Se retorna con el siguiente formato: dd/mm/yyyy
+	public static String nextDay(final int month, final int dayOfMonth, final int year){
+		if(validDate(month, dayOfMonth, year)){
+			int daysPerMonth = DAYS_PER_MONTH[month];
+			int nextDay = 0, nextMonth = month, nextYear = year;
+			if (isLeap(year) && month == FEBRUARY) daysPerMonth += 1;
+			if (dayOfMonth < daysPerMonth) {
+				nextDay = dayOfMonth+1;
+			} else {
+				nextDay = 1;
+				if  (month == DECEMBER) {
+					nextMonth = JANUARY;
+					nextYear = year+1;
+				} else {
+					nextMonth = month+1;
+				}
+			}
+			return "" + nextDay + "/" + nextMonth + "/" + nextYear;
+
+		}else{
+			return null;
+		}
+	}
+
+
   public static boolean isLeap(final int year){
     //un año es bisiesto si es divisible entre 400 ó si es divisible entre 4 pero no entre 100
     return (year % 400 == 0) || ( year % 4 == 0 && year % 100 != 0 );
   }
-  
+
   public static boolean validDate(final int month, final int dayOfMonth, final int year){
     if(FIRST_YEAR_CHECK <= year &&  JANUARY <= month && month <=  DECEMBER && FIRST_DAY_CHECK <= dayOfMonth){
       if(month == JANUARY || month == MARCH || month == MAY || month == JULY || month == AUGUST || month == OCTOBER || month == DECEMBER){
@@ -75,7 +102,7 @@ public class Tarea1{
       }else if(month == FEBRUARY){
         if(isLeap(year)){ //revisa que el dia esté entre 1 y 28 o 29 para Febrero dependiendo de si el año es bisiesto
           return dayOfMonth <= DAYS_PER_MONTH[FEBRUARY]+1;
-        }else{          
+        }else{
           return dayOfMonth <= DAYS_PER_MONTH[FEBRUARY];
         }
       }else{
