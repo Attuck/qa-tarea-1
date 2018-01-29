@@ -29,14 +29,15 @@ public class Tarea1{
    *
    */
   public static int dayOfWeekJan1st(int year){
-    int dayOfWeek = (year*365 + ((year-1) % 4) - ((year-1) % 100) + ((year-1) % 400)) % 7;
+    int dayOfWeek = (1 + 5 * ((year-1) % 4) + 4 * ((year-1) % 100) + 6 * ((year-1) % 400)) % 7;
+
     return dayOfWeek;
   }
 
 
   public static int dayOfWeek(final int month, final int dayOfMonth, final int year){
     int dayOfYear = dayOfYear(month, dayOfMonth,year);
-    int dayOfWeek = (dayOfWeekJan1st(year) + dayOfYear) % 6;
+    int dayOfWeek = (dayOfWeekJan1st(year) + (dayOfYear-1)) % 7;
     return dayOfWeek;
   }
 
